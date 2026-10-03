@@ -118,49 +118,32 @@ nav.scrolled{background:rgba(6,18,38,.92);backdrop-filter:blur(14px)}
 .gallery{padding:100px 0;background:#C2D8EE}
 .gallery-head{margin-bottom:40px}
 
-.gal-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:36px}
-.gal-tab{
-  background:none;border:1px solid rgba(8,24,40,.18);
-  padding:9px 22px;font-family:var(--body);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;
-  cursor:pointer;color:var(--muted);transition:all .22s;
-}
-.gal-tab:hover{border-color:var(--accent);color:var(--accent)}
-.gal-tab.active{background:var(--accent);border-color:var(--accent);color:#fff}
-
 .gal-grid{
   display:grid;
-  grid-template-columns:3fr 2fr;
-  grid-template-rows:210px 210px;
-  gap:6px;
+  grid-template-columns:1fr 1fr;
+  grid-template-rows:repeat(4,120px);
+  gap:5px;
   border-radius:10px;
   overflow:hidden;
 }
-@media(max-width:600px){
-  .gal-grid{grid-template-columns:1fr 1fr;grid-template-rows:180px 140px}
-  .gal-item-main{grid-column:1/3;grid-row:1/2}
-}
-.gal-item-main,.gal-item-sm{
+@media(max-width:600px){.gal-grid{grid-template-rows:repeat(4,90px)}}
+.gal-beach-top,.gal-beach-bot,.gal-sm{
   overflow:hidden;cursor:pointer;position:relative;background:var(--surface2);
 }
-.gal-item-main{grid-row:1/3}
-.gal-item-main img,.gal-item-sm img{
+.gal-beach-top{grid-column:1;grid-row:1/3}
+.gal-beach-bot{grid-column:1;grid-row:3/5}
+.gal-sm{grid-column:2}
+.gal-beach-top img,.gal-beach-bot img,.gal-sm img{
   width:100%;height:100%;object-fit:cover;
   transition:transform .45s cubic-bezier(.25,.46,.45,.94);display:block;
 }
-.gal-item-main:hover img,.gal-item-sm:hover img{transform:scale(1.06)}
-.gal-more-overlay{
-  position:absolute;inset:0;background:rgba(8,24,40,.52);
-  color:#fff;display:flex;align-items:center;justify-content:center;
-  font-family:var(--display);font-size:1.8rem;font-weight:400;letter-spacing:.05em;
-  pointer-events:none;
+.gal-beach-top:hover img,.gal-beach-bot:hover img,.gal-sm:hover img{transform:scale(1.06)}
+.gal-badge{
+  position:absolute;bottom:8px;right:8px;
+  background:rgba(8,24,40,.65);color:#fff;
+  font-family:var(--body);font-size:.7rem;letter-spacing:.05em;
+  padding:4px 9px;border-radius:3px;pointer-events:none;
 }
-.gal-see-all{margin-top:14px;text-align:right}
-.gal-see-all-btn{
-  background:transparent;border:1px solid var(--muted);color:var(--muted);
-  padding:9px 22px;font-family:var(--body);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;
-  cursor:pointer;transition:all .22s;
-}
-.gal-see-all-btn:hover{background:var(--accent);border-color:var(--accent);color:#fff}
 
 /* Lightbox */
 .lb-overlay{
@@ -574,57 +557,61 @@ footer{padding:64px 0;background:var(--bg);border-top:1px solid var(--sep)}
     {cat:'bath',    gr:'Μπάνιο',         en:'Bathroom',  src:'photos/bath_09.jpg'},
   ];
 
-  var CATS = [
-    {id:'beach',   gr:'Παραλία',        en:'Beach'},
-    {id:'bed1',    gr:'Υπνοδωμάτιο 1', en:'Bedroom 1'},
-    {id:'bed2',    gr:'Υπνοδωμάτιο 2', en:'Bedroom 2'},
-    {id:'garden',  gr:'Κήπος',          en:'Garden'},
-    {id:'kitchen', gr:'Κουζίνα',        en:'Kitchen'},
-    {id:'bath',    gr:'Μπάνιο',         en:'Bathroom'},
+  var HIGHLIGHTS = [
+    {cat:'beach',  src:'photos/beach_01.jpg',  cls:'gal-beach-top'},
+    {cat:'beach',  src:'photos/beach_05.jpg',  cls:'gal-beach-bot'},
+    {cat:'bed1',   src:'photos/bed1_01.jpg',   cls:'gal-sm'},
+    {cat:'bed2',   src:'photos/bed2_01.jpg',   cls:'gal-sm'},
+    {cat:'garden', src:'photos/garden_01.jpg', cls:'gal-sm'},
+    {cat:'garden', src:'photos/garden_04.jpg', cls:'gal-sm'},
   ];
 
-  var currentCat = 'beach';
+  var catNames = {
+    beach:'Παραλία', bed1:'Υπνοδωμάτιο 1', bed2:'Υπνοδωμάτιο 2',
+    garden:'Κήπος', kitchen:'Κουζίνα', bath:'Μπάνιο'
+  };
+  var catNamesEn = {
+    beach:'Beach', bed1:'Bedroom 1', bed2:'Bedroom 2',
+    garden:'Garden', kitchen:'Kitchen', bath:'Bathroom'
+  };
+
+  var catTotal = {};
+  PHOTOS.forEach(function(p){ catTotal[p.cat] = (catTotal[p.cat]||0)+1; });
+
+  var hlCount = {};
+  HIGHLIGHTS.forEach(function(h){ hlCount[h.cat] = (hlCount[h.cat]||0)+1; });
+
   var lbPhotos = [];
   var lbIdx = 0;
 
   function isGr(){ return lang === 'gr'; }
 
   function galRender(){
-    var tabsEl = document.getElementById('galTabs');
     var gridEl = document.getElementById('galGrid');
+    var tabsEl = document.getElementById('galTabs');
     var seeAllEl = document.getElementById('galSeeAll');
-    if(!tabsEl || !gridEl) return;
+    if(tabsEl) tabsEl.innerHTML = '';
+    if(seeAllEl) seeAllEl.innerHTML = '';
+    if(!gridEl) return;
 
-    tabsEl.innerHTML = CATS.map(function(c){
-      return '<button class="gal-tab'+(c.id===currentCat?' active':'')+'" onclick="galFilter(\''+c.id+'\')">'+(isGr()?c.gr:c.en)+'</button>';
+    var hlSeen = {};
+    gridEl.innerHTML = HIGHLIGHTS.map(function(h){
+      hlSeen[h.cat] = (hlSeen[h.cat]||0)+1;
+      var isLast = hlSeen[h.cat] === hlCount[h.cat];
+      var remaining = (catTotal[h.cat]||0) - (hlCount[h.cat]||0);
+      var badge = (isLast && remaining > 0)
+        ? '<div class="gal-badge">+'+ remaining +'</div>' : '';
+      return '<div class="'+h.cls+'" onclick="openCat(\''+h.cat+'\')">'
+        +'<img src="'+h.src+'" alt="" loading="lazy">'+badge+'</div>';
     }).join('');
-
-    lbPhotos = PHOTOS.filter(function(p){return p.cat===currentCat;});
-
-    var total = lbPhotos.length;
-    var show = lbPhotos.slice(0, 5);
-    var remaining = total - 5;
-
-    gridEl.innerHTML = show.map(function(p, i){
-      var cls = i === 0 ? 'gal-item-main' : 'gal-item-sm';
-      var overlay = (i === 4 && remaining > 0)
-        ? '<div class="gal-more-overlay">+'+remaining+'</div>' : '';
-      return '<div class="'+cls+'" onclick="lbOpen('+i+')">'
-        +'<img src="'+p.src+'" alt="'+(isGr()?p.gr:p.en)+'" loading="lazy">'
-        +overlay+'</div>';
-    }).join('');
-
-    if(seeAllEl){
-      var btnLabel = isGr()
-        ? 'Δείτε όλες τις φωτογραφίες ('+total+') →'
-        : 'See all photos ('+total+') →';
-      seeAllEl.innerHTML = '<button class="gal-see-all-btn" onclick="lbOpen(0)">'+btnLabel+'</button>';
-    }
   }
 
-  window.galFilter = function(cat){
-    currentCat = cat;
-    galRender();
+  window.openCat = function(cat){
+    lbPhotos = PHOTOS.filter(function(p){return p.cat===cat;});
+    lbIdx = 0;
+    lbShow();
+    document.getElementById('lb').classList.add('open');
+    document.body.style.overflow='hidden';
   };
 
   window.lbOpen = function(idx){
@@ -647,7 +634,8 @@ footer{padding:64px 0;background:var(--bg);border-top:1px solid var(--sep)}
   function lbShow(){
     var p = lbPhotos[lbIdx];
     document.getElementById('lb-img').src = p.src || '';
-    document.getElementById('lb-cap').textContent = isGr() ? p.gr : p.en;
+    var capName = isGr() ? (catNames[p.cat]||p.gr) : (catNamesEn[p.cat]||p.en);
+    document.getElementById('lb-cap').textContent = capName;
     document.getElementById('lb-count').textContent = (lbIdx+1) + ' / ' + lbPhotos.length;
   }
 
