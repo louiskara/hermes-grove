@@ -1,0 +1,652 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Hermes Grove</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Source+Serif+4:ital,wght@0,300;0,400;1,300&display=swap">
+
+<style>
+:root {
+  --bg:        #EBF2F8;
+  --surface:   #DCEAF4;
+  --surface2:  #CCE0EE;
+  --text:      #081828;
+  --muted:     #3A5C78;
+  --accent:    #1455A0;
+  --accent-h:  #0F4590;
+  --sep:       rgba(8,24,40,.09);
+  --hero-ov:   rgba(5,18,45,.28);
+  --airbnb:    #E8584B;
+  --booking:   #003580;
+
+  --display: 'Cormorant Garamond', Georgia, serif;
+  --body:    'Source Serif 4', Georgia, serif;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.6}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 40px;transition:background .35s,backdrop-filter .35s;
+  gap:16px;
+}
+nav.scrolled{background:rgba(6,18,38,.92);backdrop-filter:blur(14px)}
+.nav-logo{font-family:var(--display);font-size:1.2rem;font-weight:400;letter-spacing:.1em;color:#EDE7D9;text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:28px;list-style:none}
+.nav-links a{font-family:var(--body);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(237,231,217,.72);text-decoration:none;transition:color .2s}
+.nav-links a:hover,.nav-links a.active{color:#EDE7D9}
+.nav-right{display:flex;align-items:center;gap:14px;flex-shrink:0}
+.lang-toggle{display:flex;align-items:center;gap:2px}
+.lang-btn{background:none;border:none;color:rgba(237,231,217,.5);font-family:var(--body);font-size:.7rem;letter-spacing:.1em;padding:4px 8px;cursor:pointer;transition:all .2s}
+.lang-btn.active{color:#EDE7D9}
+.lang-sep{color:rgba(237,231,217,.3);font-size:.7rem}
+.nav-cta{font-family:var(--body);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#fff;text-decoration:none;background:#0E2E58;padding:10px 22px;border-radius:40px;transition:background .2s;white-space:nowrap}
+.nav-cta:hover{background:#163A70}
+@media(max-width:860px){.nav-links{display:none}}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;position:relative;
+  display:flex;align-items:center;justify-content:center;text-align:center;
+  overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 65% 55% at 20% 65%, rgba(18,60,130,.55) 0%, transparent 65%),
+    radial-gradient(ellipse 55% 50% at 80% 30%, rgba(10,50,110,.45) 0%, transparent 60%),
+    radial-gradient(ellipse 80% 35% at 50% 100%, rgba(5,30,80,.4) 0%, transparent 55%),
+    radial-gradient(ellipse 45% 40% at 60% 8%, rgba(25,80,160,.25) 0%, transparent 55%),
+    linear-gradient(168deg, #06121E 0%, #0A1E38 30%, #112848 55%, #0C2040 75%, #06121E 100%);
+}
+.hero-bg::after{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(circle at 20% 80%, rgba(20,85,180,.12) 0%, transparent 45%),
+    radial-gradient(circle at 80% 20%, rgba(15,70,150,.1) 0%, transparent 40%);
+}
+.hero-ov{position:absolute;inset:0;background:var(--hero-ov)}
+.hero-inner{position:relative;z-index:1;color:#EDE7D9;padding:0 20px;max-width:820px}
+.hero-eyebrow{font-family:var(--body);font-size:.7rem;letter-spacing:.35em;text-transform:uppercase;color:rgba(237,231,217,.55);margin-bottom:28px}
+.hero-h1{font-family:var(--display);font-weight:300;line-height:.95;margin-bottom:10px}
+.hero-h1 .line1{display:block;font-size:clamp(4.5rem,13vw,10rem);letter-spacing:-.01em}
+.hero-h1 .line2{display:block;font-size:clamp(3rem,8.5vw,6.5rem);font-style:italic;font-weight:300;color:rgba(237,231,217,.78);letter-spacing:.02em}
+.hero-loc{
+  font-family:var(--body);font-size:.78rem;letter-spacing:.28em;text-transform:uppercase;
+  color:rgba(237,231,217,.5);margin:28px 0 20px;
+}
+.hero-tagline{font-family:var(--display);font-size:clamp(1.1rem,2.8vw,1.5rem);font-style:italic;font-weight:300;color:rgba(237,231,217,.7);margin-bottom:48px;line-height:1.5}
+.btn-ghost{
+  display:inline-block;font-family:var(--body);font-size:.75rem;letter-spacing:.22em;text-transform:uppercase;text-decoration:none;
+  color:#EDE7D9;border:1px solid rgba(237,231,217,.42);padding:14px 44px;transition:all .28s;
+}
+.btn-ghost:hover{background:rgba(237,231,217,.09);border-color:rgba(237,231,217,.85)}
+.scroll-hint{
+  position:absolute;bottom:40px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+  color:rgba(237,231,217,.38);font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;
+}
+.scroll-line{width:1px;height:44px;background:linear-gradient(to bottom,rgba(237,231,217,.38),transparent);animation:sp 2.2s ease-in-out infinite}
+@keyframes sp{0%,100%{opacity:.4;transform:scaleY(1)}50%{opacity:.9;transform:scaleY(1.12)}}
+
+/* ── SHARED ── */
+.wrap{max-width:1120px;margin:0 auto;padding:0 48px}
+@media(max-width:640px){.wrap{padding:0 20px}nav{padding:16px 20px}}
+.eyebrow{font-size:.68rem;letter-spacing:.32em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:18px}
+.sec-title{font-family:var(--display);font-size:clamp(2rem,4.5vw,3.4rem);font-weight:400;line-height:1.18;text-wrap:balance;margin-bottom:24px}
+.sec-title em{font-style:italic;font-weight:300}
+.sec-body{font-size:1rem;font-weight:300;color:var(--muted);line-height:1.85;max-width:54ch}
+.sep-line{width:48px;height:1px;background:var(--accent);opacity:.6;margin:32px 0}
+
+/* ── ABOUT ── */
+.about{padding:110px 0;background:#C2D8EE}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:center}
+@media(max-width:740px){.about-grid{grid-template-columns:1fr;gap:52px}}
+
+/* ── FEATURES ── */
+.features{padding:100px 0;background:var(--surface);border-top:1px solid var(--sep);border-bottom:1px solid var(--sep)}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:52px}
+@media(max-width:740px){.feat-grid{grid-template-columns:1fr;gap:44px}}
+.feat-icon{margin-bottom:20px;color:var(--accent)}
+.feat-title{font-family:var(--display);font-size:1.45rem;font-weight:500;margin-bottom:12px}
+.feat-body{font-size:.95rem;font-weight:300;color:var(--muted);line-height:1.8}
+
+/* ── GALLERY ── */
+.gallery{padding:100px 0;background:#C2D8EE}
+.gallery-head{margin-bottom:40px}
+
+.gal-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:36px}
+.gal-tab{
+  background:none;border:1px solid rgba(8,24,40,.18);
+  padding:9px 22px;font-family:var(--body);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;
+  cursor:pointer;color:var(--muted);transition:all .22s;
+}
+.gal-tab:hover{border-color:var(--accent);color:var(--accent)}
+.gal-tab.active{background:var(--accent);border-color:var(--accent);color:#fff}
+
+.gal-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+@media(max-width:720px){.gal-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.gal-grid{grid-template-columns:1fr}}
+
+.gal-item{
+  aspect-ratio:4/3;overflow:hidden;cursor:pointer;
+  background:var(--surface2);position:relative;
+}
+.gal-item img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform .45s cubic-bezier(.25,.46,.45,.94);
+  display:block;
+}
+.gal-item:hover img{transform:scale(1.06)}
+.gal-item.empty{
+  cursor:default;
+  background:repeating-linear-gradient(45deg,var(--surface),var(--surface) 12px,var(--surface2) 12px,var(--surface2) 13px);
+}
+.gal-item:not(.empty)::after{
+  content:'Hermes Grove';
+  position:absolute;bottom:10px;right:12px;
+  font-family:var(--display);font-size:.62rem;font-style:italic;letter-spacing:.18em;
+  color:rgba(255,255,255,.38);
+  text-shadow:0 1px 3px rgba(0,0,0,.45);
+  pointer-events:none;z-index:3;
+}
+.gal-num{
+  position:absolute;top:10px;left:10px;z-index:2;
+  background:rgba(6,18,38,.72);color:#fff;
+  font-family:var(--body);font-size:.72rem;letter-spacing:.1em;
+  width:28px;height:28px;display:flex;align-items:center;justify-content:center;
+  border-radius:2px;font-weight:400;
+  opacity:0;transition:opacity .2s;
+}
+.gal-item:hover .gal-num{opacity:1}
+
+/* Lightbox */
+.lb-overlay{
+  display:none;position:fixed;inset:0;z-index:500;
+  background:rgba(4,12,28,.96);
+  align-items:center;justify-content:center;
+}
+.lb-overlay.open{display:flex}
+.lb-body{
+  position:relative;display:flex;align-items:center;justify-content:center;
+  width:100%;height:100%;
+}
+.lb-img-wrap{
+  max-width:90vw;max-height:90vh;
+  display:flex;flex-direction:column;align-items:center;
+  position:relative;
+}
+.lb-img-wrap::after{
+  content:'Hermes Grove';
+  position:absolute;bottom:54px;right:10px;
+  font-family:var(--display);font-size:.85rem;font-style:italic;letter-spacing:.2em;
+  color:rgba(255,255,255,.32);
+  text-shadow:0 1px 4px rgba(0,0,0,.55);
+  pointer-events:none;
+}
+.lb-img-wrap img{
+  max-width:90vw;max-height:82vh;
+  object-fit:contain;display:block;
+}
+.lb-cap{
+  margin-top:16px;font-family:var(--body);font-size:.7rem;letter-spacing:.2em;
+  text-transform:uppercase;color:rgba(237,231,217,.45);text-align:center;
+}
+.lb-count{
+  font-size:.65rem;letter-spacing:.1em;color:rgba(237,231,217,.3);margin-top:6px;text-align:center;
+}
+.lb-close{
+  position:fixed;top:20px;right:26px;z-index:10;
+  background:none;border:none;color:rgba(237,231,217,.7);
+  font-size:2rem;cursor:pointer;line-height:1;padding:6px 10px;
+  transition:color .2s;
+}
+.lb-close:hover{color:#EDE7D9}
+.lb-prev,.lb-next{
+  position:fixed;top:50%;transform:translateY(-50%);z-index:10;
+  background:none;border:none;color:rgba(237,231,217,.6);
+  font-size:3.5rem;cursor:pointer;line-height:1;padding:10px 18px;
+  transition:color .2s;user-select:none;
+}
+.lb-prev{left:8px}.lb-next{right:8px}
+.lb-prev:hover,.lb-next:hover{color:#EDE7D9}
+@media(max-width:600px){
+  .lb-prev,.lb-next{font-size:2.5rem;padding:8px 12px}
+}
+
+/* ── EXPLORE ── */
+.explore{padding:100px 0;background:var(--bg);border-top:1px solid var(--sep)}
+.explore-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:36px;margin-top:52px}
+@media(max-width:740px){.explore-grid{grid-template-columns:1fr;gap:28px}}
+.exp-card{background:var(--surface);padding:36px 32px;position:relative;transition:transform .2s}
+.exp-card:hover{transform:translateY(-4px)}
+.exp-num{font-family:var(--display);font-size:3rem;font-weight:300;font-style:italic;color:var(--surface2);line-height:1;margin-bottom:16px;user-select:none}
+.exp-title{font-family:var(--display);font-size:1.4rem;font-weight:500;margin-bottom:6px}
+.exp-dist{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+.exp-body{font-size:.92rem;font-weight:300;color:var(--muted);line-height:1.8}
+
+/* ── BOOKING ── */
+.booking{padding:110px 0;background:var(--surface);border-top:1px solid var(--sep);text-align:center}
+.booking-title{font-family:var(--display);font-size:clamp(2.4rem,5.5vw,4.2rem);font-weight:300;font-style:italic;line-height:1.18;text-wrap:balance;margin-bottom:14px}
+.booking-sub{font-size:.95rem;font-weight:300;color:var(--muted);margin-bottom:52px}
+.booking-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn-air{display:inline-flex;align-items:center;gap:10px;background:var(--airbnb);color:#fff;text-decoration:none;font-family:var(--body);font-size:.8rem;letter-spacing:.1em;padding:14px 34px;transition:opacity .2s}
+.btn-air:hover{opacity:.86}
+.btn-bk{display:inline-flex;align-items:center;gap:10px;background:var(--booking);color:#fff;text-decoration:none;font-family:var(--body);font-size:.8rem;letter-spacing:.1em;padding:14px 34px;transition:opacity .2s}
+.btn-bk:hover{opacity:.86}
+.btn-dir{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--sep);color:var(--text);text-decoration:none;font-family:var(--body);font-size:.8rem;letter-spacing:.1em;padding:14px 34px;background:transparent;cursor:pointer;transition:all .2s}
+.btn-dir:hover{border-color:var(--accent);color:var(--accent)}
+.btn-phone{position:relative}
+.phone-tooltip{
+  display:none;position:absolute;bottom:calc(100% + 10px);left:50%;transform:translateX(-50%);
+  background:var(--text);color:#fff;font-size:.75rem;letter-spacing:.05em;
+  padding:6px 14px;white-space:nowrap;pointer-events:auto;user-select:text;cursor:text;
+}
+.phone-tooltip::after{
+  content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);
+  border:5px solid transparent;border-top-color:var(--text);
+}
+.btn-phone:hover .phone-tooltip,
+.phone-tooltip:hover{display:block}
+
+/* ── FOOTER ── */
+footer{padding:64px 0;background:var(--bg);border-top:1px solid var(--sep)}
+.foot-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:28px}
+@media(max-width:600px){.foot-inner{flex-direction:column;text-align:center}}
+.foot-logo{font-family:var(--display);font-size:1.5rem;font-weight:400;letter-spacing:.08em;color:var(--text);text-decoration:none}
+.foot-sub{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+.foot-links{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.foot-a{color:var(--muted);text-decoration:none;font-size:.85rem;transition:color .2s}
+.foot-a:hover{color:var(--accent)}
+.foot-copy{font-size:.72rem;color:var(--muted);opacity:.65}
+
+/* ── LANGUAGE ── */
+[data-gr],[data-en]{display:none}
+.lang-gr [data-gr]{display:revert}
+.lang-en [data-en]{display:revert}
+</style>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">Hermes Grove</a>
+  <ul class="nav-links">
+    <li><a href="#" class="active"><span data-gr>ΑΡΧΙΚΗ</span><span data-en>HOME</span></a></li>
+    <li><a href="#about"><span data-gr>ΤΟ ΣΠΙΤΙ</span><span data-en>THE HOUSE</span></a></li>
+    <li><a href="#gallery"><span data-gr>ΓΚΑΛΕΡΙ</span><span data-en>GALLERY</span></a></li>
+    <li><a href="#explore"><span data-gr>ΕΞΕΡΕΥΝΗΣΗ</span><span data-en>EXPLORE</span></a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btn-gr" onclick="setLang('gr')">GR</button>
+      <span class="lang-sep">|</span>
+      <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+    <a href="#booking" class="nav-cta">
+      <span data-gr>Κράτηση</span><span data-en>Book Now</span>
+    </a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-ov"></div>
+  <div class="hero-inner">
+    <p class="hero-eyebrow"><span data-gr>Σπιάντζα · Κατάκολο · Ηλεία</span><span data-en>Spiantza · Katakolon · Ilia</span></p>
+    <h1 class="hero-h1">
+      <span class="line1">Hermes</span>
+      <span class="line2">Grove</span>
+    </h1>
+    <p class="hero-loc"><span data-gr>2 Υπνοδωμάτια &nbsp;·&nbsp; Παραθαλάσσια Βίλα</span><span data-en>2 Bedrooms &nbsp;·&nbsp; Seaside Villa</span></p>
+    <p class="hero-tagline">
+      <span data-gr>Εκεί που η αρχαία γη του Ολυμπιακού κόσμου<br>συναντά τη γαλήνη του Ιονίου πελάγους.</span>
+      <span data-en>Where the ancient land of Olympia<br>meets the calm of the Ionian Sea.</span>
+    </p>
+    <a href="#booking" class="btn-ghost">
+      <span data-gr>Κάντε Κράτηση</span><span data-en>Book Your Stay</span>
+    </a>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    <span data-gr>Ανακαλύψτε</span><span data-en>Discover</span>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <div>
+        <span class="eyebrow"><span data-gr>Σχετικά με εμάς</span><span data-en>About</span></span>
+        <h2 class="sec-title"><span data-gr>Ένα καταφύγιο<br><em>στη γη της Αρχαίας Ολυμπίας</em></span><span data-en>A retreat<br><em>in the land of Ancient Olympia</em></span></h2>
+        <div class="sep-line"></div>
+        <p class="sec-body">
+          <span data-gr>Το Hermes Grove βρίσκεται σε απόσταση αναπνοής από τη χρυσή παραλία της Σπιάτζας. Και 30 λεπτά από την Αρχαία Ολυμπία. Μια βίλα με δύο υπνοδωμάτια, ιδιωτικό κήπο και αδιατάρακτη ησυχία — φτιαγμένη για να ξεχαστείτε.</span>
+          <span data-en>Hermes Grove sits a breath away from the golden beach of Spiantza and 30 minutes from Ancient Olympia. A two-bedroom villa with a private garden and undisturbed peace — made for you to truly rest.</span>
+        </p>
+        <p class="sec-body" style="margin-top:16px">
+          <span data-gr>Η φιλοξενία μας είναι προσωπική. Θα σας υποδεχτούμε εμείς οι ίδιοι, θα μοιραστούμε τα μυστικά της περιοχής και θα φροντίσουμε κάθε λεπτομέρεια της διαμονής σας.</span>
+          <span data-en>Our hospitality is personal. We welcome you ourselves, share the secrets of the area, and attend to every detail of your stay.</span>
+        </p>
+      </div>
+      <div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="wrap">
+    <div class="feat-grid">
+      <div>
+        <div class="feat-icon">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <h3 class="feat-title"><span data-gr>Τέλεια Τοποθεσία</span><span data-en>Prime Location</span></h3>
+        <p class="feat-body"><span data-gr>1 λεπτό με τα πόδια από τη χρυσή παραλία της Σπιάτζας και 30 λεπτά από την Αρχαία Ολυμπία.</span><span data-en>1 minute walk from the golden beach of Spiantza and 30 minutes from Ancient Olympia.</span></p>
+      </div>
+      <div>
+        <div class="feat-icon">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <h3 class="feat-title"><span data-gr>Ιδιωτικός Χώρος</span><span data-en>Your Private Space</span></h3>
+        <p class="feat-body"><span data-gr>Ιδιωτικό parking, ιδιωτικός κήπος, πλήρης κουζίνα και κλιματισμός σε κάθε υπνοδωμάτιο. Κάθε γωνιά επιμελημένη με αγάπη στη λεπτομέρεια.</span><span data-en>Private parking, private garden, full kitchen and air conditioning in every bedroom. Every corner curated with attention to detail.</span></p>
+      </div>
+      <div>
+        <div class="feat-icon">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <h3 class="feat-title"><span data-gr>Αυθεντική Φιλοξενία</span><span data-en>Genuine Hospitality</span></h3>
+        <p class="feat-body"><span data-gr>Προσωπική υποδοχή, τοπικές συμβουλές και άμεση επικοινωνία. Είμαστε πάντα ένα μήνυμα μακριά.</span><span data-en>Personal welcome, local tips and direct communication. We are always just one message away.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <div class="wrap">
+    <div class="gallery-head">
+      <span class="eyebrow"><span data-gr>Φωτογραφίες</span><span data-en>Gallery</span></span>
+      <h2 class="sec-title" style="margin-bottom:32px"><span data-gr><em>Η Τέχνη</em> του Να Ζεις</span><span data-en><em>The Art</em> of Living</span></h2>
+    </div>
+    <div class="gal-tabs" id="galTabs"></div>
+    <div class="gal-grid" id="galGrid"></div>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lb-overlay" id="lb">
+  <button class="lb-close" onclick="lbClose()">&#x2715;</button>
+  <button class="lb-prev" onclick="lbNav(-1)">&#8249;</button>
+  <div class="lb-body" onclick="lbBgClick(event)">
+    <div class="lb-img-wrap">
+      <img id="lb-img" src="" alt="">
+      <div class="lb-cap" id="lb-cap"></div>
+      <div class="lb-count" id="lb-count"></div>
+    </div>
+  </div>
+  <button class="lb-next" onclick="lbNav(1)">&#8250;</button>
+</div>
+
+<!-- EXPLORE -->
+<section class="explore" id="explore">
+  <div class="wrap">
+    <span class="eyebrow"><span data-gr>Γύρω σας</span><span data-en>Around You</span></span>
+    <h2 class="sec-title"><span data-gr>Εξερευνήστε <em>την περιοχή</em></span><span data-en>Explore <em>the region</em></span></h2>
+    <div class="sep-line"></div>
+    <div class="explore-grid">
+
+      <div class="exp-card">
+        <div class="exp-num">01</div>
+        <h3 class="exp-title"><span data-gr>Αρχαία Ολυμπία</span><span data-en>Ancient Olympia</span></h3>
+        <p class="exp-dist"><span data-gr>30 λεπτά</span><span data-en>30 minutes</span></p>
+        <p class="exp-body"><span data-gr>Ο τόπος γέννησης των Ολυμπιακών Αγώνων. Αρχαιολογικός χώρος UNESCO με τον Ναό του Διός, την ιερή Άλτη και το αρχαίο Στάδιο όπου ακόμα αντηχεί η ιστορία.</span><span data-en>The birthplace of the Olympic Games. A UNESCO World Heritage Site with the Temple of Zeus, the sacred Altis and the ancient Stadium where history still echoes.</span></p>
+      </div>
+
+      <div class="exp-card">
+        <div class="exp-num">02</div>
+        <h3 class="exp-title"><span data-gr>Κατάκολο</span><span data-en>Katakolon</span></h3>
+        <p class="exp-dist"><span data-gr>15 λεπτά</span><span data-en>15 minutes</span></p>
+        <p class="exp-body"><span data-gr>Ιστορικό λιμάνι κρουαζιέρας με τον περίφημο Φάρο του 1865 — ιστορικό διατηρητέο μνημείο. Δεσπόζει το Ποντικόκαστρο, μεσαιωνικό κάστρο με πανοραμική θέα. Η σιδηροδρομική γραμμή του 1882 διηγείται ακόμα την εποχή της σταφιδεξαγωγής.</span><span data-en>A historic cruise port home to the renowned 1865 Lighthouse — a protected historic monument. The medieval Pondikokastro castle crowns the hill with panoramic sea views. The 1882 railway line still tells the story of the great currant trade era.</span></p>
+      </div>
+
+      <div class="exp-card">
+        <div class="exp-num">03</div>
+        <h3 class="exp-title"><span data-gr>Δάσος Φολόης</span><span data-en>Foloi Forest</span></h3>
+        <p class="exp-dist"><span data-gr>45 λεπτά</span><span data-en>45 minutes</span></p>
+        <p class="exp-body"><span data-gr>Ένα από τα αρχαιότερα δρυοδάση της Ευρώπης, γνωστό από τη μυθολογία των Κενταύρων. Άγρια άλογα κυκλοφορούν ελεύθερα ανάμεσα σε αιωνόβιες βελανιδιές.</span><span data-en>One of Europe's oldest oak forests, legendary home of the Centaurs. Wild horses roam freely among ancient oak trees in a landscape untouched by time.</span></p>
+      </div>
+
+      <div class="exp-card">
+        <div class="exp-num">04</div>
+        <h3 class="exp-title"><span data-gr>Καταρράκτες Νέδας</span><span data-en>Neda Waterfalls</span></h3>
+        <p class="exp-dist"><span data-gr>1 ώρα</span><span data-en>1 hour</span></p>
+        <p class="exp-body"><span data-gr>Το εντυπωσιακό φαράγγι του ποταμού Νέδα με τις δίδυμες καταρράκτες. Κολυμπήστε σε κρυστάλλινα νερά μέσα σε καταπράσινο τοπίο — μια εμπειρία που δεν ξεχνιέται.</span><span data-en>The stunning gorge of the Neda river with its twin waterfalls. Swim in crystal-clear waters surrounded by lush green nature — an unforgettable experience.</span></p>
+      </div>
+
+      <div class="exp-card">
+        <div class="exp-num">05</div>
+        <h3 class="exp-title"><span data-gr>Λουτρά Καϊάφα</span><span data-en>Kaiafas Spa</span></h3>
+        <p class="exp-dist"><span data-gr>20 λεπτά</span><span data-en>20 minutes</span></p>
+        <p class="exp-body"><span data-gr>Φημισμένες ιαματικές πηγές δίπλα στη μαγευτική λιμνοθάλασσα Καϊάφα, ανάμεσα σε πευκόδασος και αμμόλοφους. Χαλάρωση για σώμα και πνεύμα.</span><span data-en>Renowned thermal springs beside the enchanting Kaiafas lagoon, nestled between a pine forest and sand dunes. Rest for body and soul.</span></p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section class="booking" id="booking">
+  <div class="wrap">
+    <h2 class="booking-title"><span data-gr>Κάντε την κράτησή σας</span><span data-en>Book Your Stay</span></h2>
+    <p class="booking-sub"><span data-gr>Διαθέσιμο στο Airbnb, Booking.com ή απευθείας μαζί μας.</span><span data-en>Available on Airbnb, Booking.com or directly with us.</span></p>
+    <div class="booking-btns">
+      <a href="https://www.airbnb.gr/rooms/1415222708840412098?photo_id=1688729784&source_impression_id=p3_fdba3a58-a9d5-48b3-9dce-446c67477877_1415222708840412098_0&previous_page_section_name=1000" target="_blank" class="btn-air">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
+        Airbnb
+      </a>
+      <a href="https://www.booking.com/hotel/gr/hermes-grove.el.html?label=mkt123sc-aaf8af11-a042-4b6e-8c6b-0c29699a26eb&sid=719645a2532957e6bd21eb15c34be98f&dist=0&keep_landing=1&sb_price_type=total&type=total&" target="_blank" class="btn-bk">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
+        Booking.com
+      </a>
+      <a href="tel:+306973992390" class="btn-dir btn-phone">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.82a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg>
+        <span data-gr>Τηλέφωνο</span><span data-en>Phone</span>
+        <span class="phone-tooltip">+30 6973992390</span>
+      </a>
+      <a href="https://www.google.com/maps/place/Hermes+Grove/@37.6394876,21.4138855,17z/data=!3m1!4b1!4m6!3m5!1s0x1360c10044564d7f:0xb317ee354797a97a!8m2!3d37.6394876!4d21.4164658!16s%2Fg%2F11xnsjm27r?entry=ttu&g_ep=EgoyMDI2MDkzMC4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="btn-dir">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span data-gr>Χάρτης</span><span data-en>Map</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-inner">
+      <div>
+        <a href="#" class="foot-logo">Hermes Grove</a>
+        <div class="foot-sub"><span data-gr>Σπιάντζα · Ηλεία · Ελλάδα</span><span data-en>Spiantza · Ilia · Greece</span></div>
+      </div>
+      <div class="foot-links">
+        <a href="https://www.instagram.com/Hermes_grove/" target="_blank" class="foot-a">Instagram</a>
+        <a href="https://wa.me/306973992390" target="_blank" class="foot-a">WhatsApp</a>
+      </div>
+      <div class="foot-copy">© 2026 Hermes Grove</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var lang = 'gr';
+  try { lang = localStorage.getItem('hg-lang') || 'gr'; } catch(e){}
+
+  function setLang(l){
+    lang = l;
+    document.body.className = 'lang-' + l;
+    document.getElementById('btn-gr').classList.toggle('active', l==='gr');
+    document.getElementById('btn-en').classList.toggle('active', l==='en');
+    try { localStorage.setItem('hg-lang', l); } catch(e){}
+    galRender();
+  }
+  window.setLang = setLang;
+
+  var nav = document.getElementById('nav');
+  window.addEventListener('scroll', function(){
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  }, {passive:true});
+
+  // ── GALLERY DATA ──
+  var PHOTOS = [
+    {cat:'beach',   gr:'Παραλία',        en:'Beach',     src:'photos/beach_01.jpg'},
+    {cat:'beach',   gr:'Παραλία',        en:'Beach',     src:'photos/beach_02.jpg'},
+    {cat:'beach',   gr:'Παραλία',        en:'Beach',     src:'photos/beach_03.jpg'},
+    {cat:'beach',   gr:'Παραλία',        en:'Beach',     src:'photos/beach_04.jpg'},
+    {cat:'beach',   gr:'Παραλία',        en:'Beach',     src:'photos/beach_05.jpg'},
+    {cat:'beach',   gr:'Παραλία',        en:'Beach',     src:'photos/beach_06.jpg'},
+    {cat:'beach',   gr:'Παραλία',        en:'Beach',     src:'photos/beach_07.jpg'},
+    {cat:'beach',   gr:'Παραλία',        en:'Beach',     src:'photos/beach_08.jpg'},
+    {cat:'beach',   gr:'Παραλία',        en:'Beach',     src:'photos/beach_09.jpg'},
+    {cat:'beach',   gr:'Παραλία',        en:'Beach',     src:'photos/beach_10.jpg'},
+    {cat:'bed1',    gr:'Υπνοδωμάτιο 1', en:'Bedroom 1', src:'photos/bed1_01.jpg'},
+    {cat:'bed1',    gr:'Υπνοδωμάτιο 1', en:'Bedroom 1', src:'photos/bed1_02.jpg'},
+    {cat:'bed1',    gr:'Υπνοδωμάτιο 1', en:'Bedroom 1', src:'photos/bed1_03.jpg'},
+    {cat:'bed1',    gr:'Υπνοδωμάτιο 1', en:'Bedroom 1', src:'photos/bed1_04.jpg'},
+    {cat:'bed1',    gr:'Υπνοδωμάτιο 1', en:'Bedroom 1', src:'photos/bed1_05.jpg'},
+    {cat:'bed1',    gr:'Υπνοδωμάτιο 1', en:'Bedroom 1', src:'photos/bed1_06.jpg'},
+    {cat:'bed1',    gr:'Υπνοδωμάτιο 1', en:'Bedroom 1', src:'photos/bed1_07.jpg'},
+    {cat:'bed1',    gr:'Υπνοδωμάτιο 1', en:'Bedroom 1', src:'photos/bed1_08.jpg'},
+    {cat:'bed1',    gr:'Υπνοδωμάτιο 1', en:'Bedroom 1', src:'photos/bed1_09.jpg'},
+    {cat:'bed1',    gr:'Υπνοδωμάτιο 1', en:'Bedroom 1', src:'photos/bed1_10.jpg'},
+    {cat:'bed2',    gr:'Υπνοδωμάτιο 2', en:'Bedroom 2', src:'photos/bed2_01.jpg'},
+    {cat:'bed2',    gr:'Υπνοδωμάτιο 2', en:'Bedroom 2', src:'photos/bed2_02.jpg'},
+    {cat:'bed2',    gr:'Υπνοδωμάτιο 2', en:'Bedroom 2', src:'photos/bed2_03.jpg'},
+    {cat:'bed2',    gr:'Υπνοδωμάτιο 2', en:'Bedroom 2', src:'photos/bed2_04.jpg'},
+    {cat:'bed2',    gr:'Υπνοδωμάτιο 2', en:'Bedroom 2', src:'photos/bed2_05.jpg'},
+    {cat:'bed2',    gr:'Υπνοδωμάτιο 2', en:'Bedroom 2', src:'photos/bed2_06.jpg'},
+    {cat:'bed2',    gr:'Υπνοδωμάτιο 2', en:'Bedroom 2', src:'photos/bed2_07.jpg'},
+    {cat:'bed2',    gr:'Υπνοδωμάτιο 2', en:'Bedroom 2', src:'photos/bed2_08.jpg'},
+    {cat:'bed2',    gr:'Υπνοδωμάτιο 2', en:'Bedroom 2', src:'photos/bed2_09.jpg'},
+    {cat:'garden',  gr:'Κήπος',          en:'Garden',    src:'photos/garden_01.jpg'},
+    {cat:'garden',  gr:'Κήπος',          en:'Garden',    src:'photos/garden_02.jpg'},
+    {cat:'garden',  gr:'Κήπος',          en:'Garden',    src:'photos/garden_03.jpg'},
+    {cat:'garden',  gr:'Κήπος',          en:'Garden',    src:'photos/garden_04.jpg'},
+    {cat:'garden',  gr:'Κήπος',          en:'Garden',    src:'photos/garden_05.jpg'},
+    {cat:'garden',  gr:'Κήπος',          en:'Garden',    src:'photos/garden_06.jpg'},
+    {cat:'garden',  gr:'Κήπος',          en:'Garden',    src:'photos/garden_07.jpg'},
+    {cat:'garden',  gr:'Κήπος',          en:'Garden',    src:'photos/garden_08.jpg'},
+    {cat:'garden',  gr:'Κήπος',          en:'Garden',    src:'photos/garden_09.jpg'},
+    {cat:'garden',  gr:'Κήπος',          en:'Garden',    src:'photos/garden_10.jpg'},
+    {cat:'kitchen', gr:'Κουζίνα',        en:'Kitchen',   src:'photos/kitchen_01.jpg'},
+    {cat:'kitchen', gr:'Κουζίνα',        en:'Kitchen',   src:'photos/kitchen_02.jpg'},
+    {cat:'kitchen', gr:'Κουζίνα',        en:'Kitchen',   src:'photos/kitchen_03.jpg'},
+    {cat:'kitchen', gr:'Κουζίνα',        en:'Kitchen',   src:'photos/kitchen_04.jpg'},
+    {cat:'kitchen', gr:'Κουζίνα',        en:'Kitchen',   src:'photos/kitchen_05.jpg'},
+    {cat:'kitchen', gr:'Κουζίνα',        en:'Kitchen',   src:'photos/kitchen_06.jpg'},
+    {cat:'kitchen', gr:'Κουζίνα',        en:'Kitchen',   src:'photos/kitchen_07.jpg'},
+    {cat:'kitchen', gr:'Κουζίνα',        en:'Kitchen',   src:'photos/kitchen_08.jpg'},
+    {cat:'kitchen', gr:'Κουζίνα',        en:'Kitchen',   src:'photos/kitchen_09.jpg'},
+    {cat:'kitchen', gr:'Κουζίνα',        en:'Kitchen',   src:'photos/kitchen_10.jpg'},
+    {cat:'bath',    gr:'Μπάνιο',         en:'Bathroom',  src:'photos/bath_01.jpg'},
+    {cat:'bath',    gr:'Μπάνιο',         en:'Bathroom',  src:'photos/bath_02.jpg'},
+    {cat:'bath',    gr:'Μπάνιο',         en:'Bathroom',  src:'photos/bath_03.jpg'},
+    {cat:'bath',    gr:'Μπάνιο',         en:'Bathroom',  src:'photos/bath_04.jpg'},
+    {cat:'bath',    gr:'Μπάνιο',         en:'Bathroom',  src:'photos/bath_05.jpg'},
+    {cat:'bath',    gr:'Μπάνιο',         en:'Bathroom',  src:'photos/bath_06.jpg'},
+    {cat:'bath',    gr:'Μπάνιο',         en:'Bathroom',  src:'photos/bath_07.jpg'},
+    {cat:'bath',    gr:'Μπάνιο',         en:'Bathroom',  src:'photos/bath_08.jpg'},
+    {cat:'bath',    gr:'Μπάνιο',         en:'Bathroom',  src:'photos/bath_09.jpg'},
+  ];
+
+  var CATS = [
+    {id:'all',     gr:'Όλα',            en:'All'},
+    {id:'beach',   gr:'Παραλία',        en:'Beach'},
+    {id:'bed1',    gr:'Υπνοδωμάτιο 1', en:'Bedroom 1'},
+    {id:'bed2',    gr:'Υπνοδωμάτιο 2', en:'Bedroom 2'},
+    {id:'garden',  gr:'Κήπος',          en:'Garden'},
+    {id:'kitchen', gr:'Κουζίνα',        en:'Kitchen'},
+    {id:'bath',    gr:'Μπάνιο',         en:'Bathroom'},
+  ];
+
+  var currentCat = 'all';
+  var lbPhotos = [];
+  var lbIdx = 0;
+
+  function isGr(){ return lang === 'gr'; }
+
+  function galRender(){
+    var tabsEl = document.getElementById('galTabs');
+    var gridEl = document.getElementById('galGrid');
+    if(!tabsEl || !gridEl) return;
+
+    tabsEl.innerHTML = CATS.map(function(c){
+      return '<button class="gal-tab'+(c.id===currentCat?' active':'')+'" onclick="galFilter(\''+c.id+'\')">'+(isGr()?c.gr:c.en)+'</button>';
+    }).join('');
+
+    lbPhotos = currentCat === 'all' ? PHOTOS.slice() : PHOTOS.filter(function(p){return p.cat===currentCat;});
+
+    var showNums = currentCat !== 'all';
+    var displayItems = lbPhotos.slice();
+    if(showNums){
+      while(displayItems.length < 10) displayItems.push(null);
+    }
+    gridEl.innerHTML = displayItems.map(function(p,i){
+      if(!p) return '<div class="gal-item empty"><div class="gal-num">'+(i+1)+'</div></div>';
+      var validSrc = p.src && p.src.length > 0;
+      var num = showNums ? '<div class="gal-num">'+(i+1)+'</div>' : '';
+      return '<div class="gal-item" onclick="lbOpen('+i+')">'+num+(validSrc?'<img src="'+p.src+'" alt="'+(isGr()?p.gr:p.en)+'" loading="lazy">':'')+'</div>';
+    }).join('');
+  }
+
+  window.galFilter = function(cat){
+    currentCat = cat;
+    galRender();
+  };
+
+  window.lbOpen = function(idx){
+    lbIdx = idx;
+    lbShow();
+    document.getElementById('lb').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  };
+  window.lbClose = function(){
+    document.getElementById('lb').classList.remove('open');
+    document.body.style.overflow = '';
+  };
+  window.lbBgClick = function(e){
+    if(e.target === e.currentTarget) lbClose();
+  };
+  window.lbNav = function(dir){
+    lbIdx = (lbIdx + dir + lbPhotos.length) % lbPhotos.length;
+    lbShow();
+  };
+  function lbShow(){
+    var p = lbPhotos[lbIdx];
+    document.getElementById('lb-img').src = p.src || '';
+    document.getElementById('lb-cap').textContent = isGr() ? p.gr : p.en;
+    document.getElementById('lb-count').textContent = (lbIdx+1) + ' / ' + lbPhotos.length;
+  }
+
+  document.addEventListener('keydown', function(e){
+    if(!document.getElementById('lb').classList.contains('open')) return;
+    if(e.key==='ArrowRight') lbNav(1);
+    else if(e.key==='ArrowLeft') lbNav(-1);
+    else if(e.key==='Escape') lbClose();
+  });
+
+  setLang(lang);
+})();
+</script>
+
+</body></html>
