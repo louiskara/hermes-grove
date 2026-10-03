@@ -480,11 +480,21 @@ footer{padding:64px 0;background:var(--bg);border-top:1px solid var(--sep)}
       <div class="foot-links">
         <a href="https://www.instagram.com/Hermes_grove/" target="_blank" class="foot-a">Instagram</a>
         <a href="https://wa.me/306973992390" target="_blank" class="foot-a">WhatsApp</a>
+        <a href="privacy-policy.html" class="foot-a"><span data-gr>Πολιτική Απορρήτου</span><span data-en>Privacy Policy</span></a>
       </div>
       <div class="foot-copy">© 2026 Hermes Grove</div>
     </div>
   </div>
 </footer>
+
+<!-- COOKIE BANNER -->
+<div id="cookie-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:var(--text);color:#fff;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:.82rem;font-family:var(--body)">
+  <span>
+    <span data-gr>Χρησιμοποιούμε τεχνικά cookies για τη λειτουργία του site. Δεν συλλέγουμε προσωπικά δεδομένα. <a href="privacy-policy.html" style="color:#a8c8e8;text-decoration:underline"><span data-gr>Πολιτική Απορρήτου</span><span data-en>Privacy Policy</span></a></span>
+    <span data-en>We use technical cookies to operate this site. We do not collect personal data. <a href="privacy-policy.html" style="color:#a8c8e8;text-decoration:underline">Privacy Policy</a></span>
+  </span>
+  <button onclick="cookieAccept()" style="background:var(--accent);color:#fff;border:none;padding:8px 20px;border-radius:4px;cursor:pointer;font-size:.82rem;white-space:nowrap;font-family:var(--body)"><span data-gr>Αποδοχή</span><span data-en>Accept</span></button>
+</div>
 
 <script>
 (function(){
@@ -644,7 +654,19 @@ footer{padding:64px 0;background:var(--bg);border-top:1px solid var(--sep)}
   });
 
   setLang(lang);
+
+  // Cookie banner
+  try {
+    if(!localStorage.getItem('hg-cookies-accepted')){
+      document.getElementById('cookie-banner').style.display='flex';
+    }
+  } catch(e){}
 })();
+
+window.cookieAccept = function(){
+  try { localStorage.setItem('hg-cookies-accepted','1'); } catch(e){}
+  document.getElementById('cookie-banner').style.display='none';
+};
 </script>
 
 </body></html>
