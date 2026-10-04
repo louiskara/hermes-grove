@@ -295,14 +295,18 @@ nav.scrolled{background:rgba(6,18,38,.92);backdrop-filter:blur(14px)}
 .phone-tooltip:hover{display:block}
 
 /* ── FAQ ── */
-.faq-sec{padding:80px 0;background:var(--bg)}
+.faq-sec{padding:60px 0;background:var(--bg)}
 .faq-sec h2{font-family:var(--display);font-size:2rem;font-weight:400;margin:0 0 8px}
-.faq-sub-lbl{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:0 0 48px}
-.faq-list{display:flex;flex-direction:column;gap:0}
-.faq-item{border-top:1px solid var(--sep);padding:22px 0}
+.faq-sub-lbl{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:0 0 36px}
+.faq-list{display:flex;flex-direction:column}
+.faq-item{border-top:1px solid var(--sep)}
 .faq-list .faq-item:last-child{border-bottom:1px solid var(--sep)}
-.faq-q{font-family:var(--display);font-size:1.15rem;font-weight:400;color:var(--text);margin:0 0 8px}
-.faq-a{font-size:.9rem;color:var(--muted);line-height:1.7;margin:0}
+.faq-btn{width:100%;background:none;border:none;padding:16px 0;display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer;text-align:left}
+.faq-q{font-family:var(--display);font-size:1.1rem;font-weight:400;color:var(--text);margin:0}
+.faq-chevron{flex-shrink:0;color:var(--muted);transition:transform .25s ease}
+.faq-item.open .faq-chevron{transform:rotate(180deg)}
+.faq-a{font-size:.9rem;color:var(--muted);line-height:1.7;margin:0;padding-bottom:16px;display:none}
+.faq-item.open .faq-a{display:block}
 /* ── FOOTER ── */
 footer{padding:64px 0;background:var(--bg);border-top:1px solid var(--sep)}
 .foot-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:28px}
@@ -523,23 +527,38 @@ footer{padding:64px 0;background:var(--bg);border-top:1px solid var(--sep)}
     <p class="faq-sub-lbl">FAQ</p>
     <div class="faq-list">
       <div class="faq-item">
-        <p class="faq-q"><span data-gr>Πόσο μακριά είναι η παραλία;</span><span data-en>How far is the beach?</span></p>
+        <button class="faq-btn" onclick="this.closest('.faq-item').classList.toggle('open')">
+          <p class="faq-q"><span data-gr>Πόσο μακριά είναι η παραλία;</span><span data-en>How far is the beach?</span></p>
+          <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
         <p class="faq-a"><span data-gr>1 λεπτό με τα πόδια — η παραλία Σπιάντζας βρίσκεται μόλις 80 μέτρα από την κατοικία.</span><span data-en>Just a 1-minute walk — the beach is 80 metres from the house.</span></p>
       </div>
       <div class="faq-item">
-        <p class="faq-q"><span data-gr>Πόσα άτομα χωράει η κατοικία;</span><span data-en>How many guests can it accommodate?</span></p>
+        <button class="faq-btn" onclick="this.closest('.faq-item').classList.toggle('open')">
+          <p class="faq-q"><span data-gr>Πόσα άτομα χωράει η κατοικία;</span><span data-en>How many guests can it accommodate?</span></p>
+          <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
         <p class="faq-a"><span data-gr>Έως 5 άτομα. Διαθέτει 2 υπνοδωμάτια και πλήρη εξοπλισμό για όλους.</span><span data-en>Up to 5 guests across 2 fully equipped bedrooms.</span></p>
       </div>
       <div class="faq-item">
-        <p class="faq-q"><span data-gr>Ποιες ώρες είναι το check-in και check-out;</span><span data-en>What are the check-in and check-out times?</span></p>
+        <button class="faq-btn" onclick="this.closest('.faq-item').classList.toggle('open')">
+          <p class="faq-q"><span data-gr>Ποιες ώρες είναι το check-in και check-out;</span><span data-en>What are the check-in and check-out times?</span></p>
+          <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
         <p class="faq-a"><span data-gr>Check-in: 15:00–20:00 &nbsp;|&nbsp; Check-out: έως 11:00.</span><span data-en>Check-in: 3 PM–8 PM &nbsp;|&nbsp; Check-out: by 11 AM.</span></p>
       </div>
       <div class="faq-item">
-        <p class="faq-q"><span data-gr>Υπάρχει χώρος στάθμευσης;</span><span data-en>Is there parking?</span></p>
+        <button class="faq-btn" onclick="this.closest('.faq-item').classList.toggle('open')">
+          <p class="faq-q"><span data-gr>Υπάρχει χώρος στάθμευσης;</span><span data-en>Is there parking?</span></p>
+          <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
         <p class="faq-a"><span data-gr>Ναι — ιδιωτικός, σκεπαστός χώρος στάθμευσης εντός της ιδιοκτησίας.</span><span data-en>Yes — private covered parking on the property.</span></p>
       </div>
       <div class="faq-item">
-        <p class="faq-q"><span data-gr>Επιτρέπονται τα κατοικίδια;</span><span data-en>Are pets allowed?</span></p>
+        <button class="faq-btn" onclick="this.closest('.faq-item').classList.toggle('open')">
+          <p class="faq-q"><span data-gr>Επιτρέπονται τα κατοικίδια;</span><span data-en>Are pets allowed?</span></p>
+          <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
         <p class="faq-a"><span data-gr>Δυστυχώς, δεν επιτρέπονται κατοικίδια.</span><span data-en>Unfortunately, pets are not allowed.</span></p>
       </div>
     </div>
